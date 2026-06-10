@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`no_std` support** with the `alloc` crate (heap-backed `Vec`, `String`, and related types). Use `default-features = false` on the `marser` dependency for embedded or other targets without `std`.
 - Cargo feature **`std`** (enabled by default) gates standard-library helpers such as `ParserError::eprint` / `write` and trace-to-file APIs.
+- `parser::recursive2` through `parser::recursive12` build mutually recursive parser groups while keeping deferred parser initialization internal.
 
 ### Removed
 

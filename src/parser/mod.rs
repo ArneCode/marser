@@ -46,19 +46,23 @@ pub mod recover_error;
 pub mod single_token;
 pub mod token_parser;
 
+use alloc::{boxed::Box, rc::Rc, vec::Vec};
+use core::fmt::Display;
+
 pub use capture::{
     BindDebugInfo, BoundResult, BoundValue, Capture, MultipleProperty, OptionalProperty, Property,
     ResultBinder, SingleProperty, SpanBinder, bind_result, bind_span,
 };
-pub use deferred::{Deferred, DeferredWeak, recursive};
+pub use deferred::{
+    Deferred, DeferredWeak, recursive, recursive2, recursive3, recursive4, recursive5, recursive6,
+    recursive7, recursive8, recursive9, recursive10, recursive11, recursive12,
+};
 pub use impl_parser::as_parser;
 pub use memoized::Memoized;
 pub use multiple::MultipleParser;
 pub use range_parser::RangeParser;
 pub use recover_error::ErrorRecoverer;
 pub use single_token::SingleTokenParser;
-use alloc::{boxed::Box, rc::Rc, vec::Vec};
-use core::fmt::Display;
 pub use token_parser::{TokenParser, token_parser};
 
 #[cfg(feature = "parser-trace")]

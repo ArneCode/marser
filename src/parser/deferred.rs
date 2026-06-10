@@ -1,7 +1,8 @@
 //! Fixed-point and mutually recursive parsers via a cell filled after construction.
 //!
-//! Use [`recursive`] to obtain a [`Deferred`] handle, build a parser that closes over
-//! [`DeferredWeak`], then parse through the strong [`Deferred`].
+//! Use [`recursive`] or `recursiveN` helpers such as [`recursive2`] to obtain [`Deferred`]
+//! handles, build parsers that close over [`DeferredWeak`], then parse through the strong
+//! [`Deferred`] handles.
 
 use alloc::boxed::Box;
 use alloc::rc::{Rc, Weak};
@@ -178,4 +179,66 @@ where
     let parser = parser_fn(deferred.clone_weak());
     deferred.set_parser(parser).expect("Failed to set parser");
     deferred
+}
+
+macro_rules! decl_recursive_fns {
+    ($(
+        $fn_name:ident($(($deferred:ident, $parser:ident, $output:ident)),+);
+    )+) => {
+        $(
+            /// Creates mutually recursive [`Deferred`] parsers.
+            ///
+            /// The closure receives weak handles in the same order as the returned
+            /// parsers and must return the real parsers in that order. The returned
+            /// strong handles are filled before this function returns.
+            ///
+            /// For a single recursive rule, prefer [`recursive`].
+            pub fn $fn_name<'src, Inp, F, $($output, $parser),+>(
+                parser_fn: F,
+            ) -> (
+                $(Deferred<'src, 'src, Inp, $output>,)+
+            )
+            where
+                Inp: Input<'src>,
+                F: FnOnce(
+                    $(DeferredWeak<'src, 'src, Inp, $output>),+
+                ) -> (
+                    $($parser,)+
+                ),
+                $($parser: Parser<'src, Inp, Output = $output> + 'src,)+
+            {
+                $(
+                    #[allow(non_snake_case)]
+                    let $deferred: Deferred<'src, 'src, Inp, $output> = Deferred::new();
+                )+
+
+                #[allow(non_snake_case)]
+                let ($($parser,)+) = parser_fn(
+                    $($deferred.clone_weak(),)+
+                );
+
+                $(
+                    $deferred
+                        .set_parser($parser)
+                        .expect("Failed to set recursive parser");
+                )+
+
+                ($($deferred,)+)
+            }
+        )+
+    };
+}
+
+decl_recursive_fns! {
+    recursive2((D1, P1, O1), (D2, P2, O2));
+    recursive3((D1, P1, O1), (D2, P2, O2), (D3, P3, O3));
+    recursive4((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4));
+    recursive5((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4), (D5, P5, O5));
+    recursive6((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4), (D5, P5, O5), (D6, P6, O6));
+    recursive7((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4), (D5, P5, O5), (D6, P6, O6), (D7, P7, O7));
+    recursive8((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4), (D5, P5, O5), (D6, P6, O6), (D7, P7, O7), (D8, P8, O8));
+    recursive9((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4), (D5, P5, O5), (D6, P6, O6), (D7, P7, O7), (D8, P8, O8), (D9, P9, O9));
+    recursive10((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4), (D5, P5, O5), (D6, P6, O6), (D7, P7, O7), (D8, P8, O8), (D9, P9, O9), (D10, P10, O10));
+    recursive11((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4), (D5, P5, O5), (D6, P6, O6), (D7, P7, O7), (D8, P8, O8), (D9, P9, O9), (D10, P10, O10), (D11, P11, O11));
+    recursive12((D1, P1, O1), (D2, P2, O2), (D3, P3, O3), (D4, P4, O4), (D5, P5, O5), (D6, P6, O6), (D7, P7, O7), (D8, P8, O8), (D9, P9, O9), (D10, P10, O10), (D11, P11, O11), (D12, P12, O12));
 }
