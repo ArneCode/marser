@@ -77,6 +77,7 @@ Runnable examples live under [`examples/`](examples/README.md) (see also [below]
 - [Guide](https://docs.rs/marser/latest/marser/guide/index.html) on docs.rs
 - [API documentation](https://docs.rs/marser)
 - [crates.io](https://crates.io/crates/marser)
+- [Design rationale: A Grammar-First Approach to Parser Combinators in Rust](https://blog.arnedebo.com/posts/a-grammar-first-approach-to-parser-combinators/)
 
 ## Cargo features
 
