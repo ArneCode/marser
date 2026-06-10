@@ -29,9 +29,7 @@ exclude = [
     "marser-trace-viewer/**",
     ".vscode/**",
     ".gitmodules",
-    "scripts/**",
     ".tokeignore",
-    "src/bin/profile_json_parse.rs",
 ]
 
 # docs.rs: build with tracing + erased so public API behind features is documented.
@@ -46,7 +44,7 @@ debug = false
 lto = true
 codegen-units = 1
 
-# `cargo run --profile profiling`, flamegraph script — debug symbols; LTO off for clearer stacks.
+# Sampling profilers (e.g. `cargo flamegraph` on a bench binary) — debug symbols; LTO off for clearer stacks.
 [profile.profiling]
 inherits = "release"
 debug = true
@@ -81,11 +79,6 @@ trybuild = "1.0.105"
 name = "json_parse"
 harness = false
 path = "benches/json_parse.rs"
-
-[[bin]]
-name = "profile_json_parse"
-path = "src/bin/profile_json_parse.rs"
-# Omitted from crates.io tarball via `exclude` below (local `cargo run --bin profile_json_parse` still works).
 
 [[example]]
 name = "json"

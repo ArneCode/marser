@@ -148,7 +148,7 @@ If you use AI tools to draft code, ensure it is correct and tested; the maintain
 cargo bench --bench json_parse
 ```
 
-Uses `[profile.bench]` (`lto`, `codegen-units = 1`). For flamegraphs / `perf`, use `[profile.profiling]` (`debug = true`, LTO off), e.g. [`scripts/flamegraph-json-parse.sh`](scripts/flamegraph-json-parse.sh) or `cargo run --profile profiling --bin profile_json_parse`.
+Uses `[profile.bench]` (`lto`, `codegen-units = 1`). For sampling profilers / flamegraphs, build with `[profile.profiling]` (`debug = true`, LTO off); `profile.samply` inherits `profiling`.
 
 ---
 

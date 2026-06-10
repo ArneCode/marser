@@ -1,5 +1,4 @@
-//! Shared JSON fixture loading and grammar for the `json_parse` Criterion bench and the
-//! `profile_json_parse` profiling binary.
+//! Shared JSON fixture loading and grammar for the `json_parse` Criterion bench.
 
 use std::path::{Path, PathBuf};
 

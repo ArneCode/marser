@@ -118,7 +118,7 @@ Input:
 
 Example diagnostic, rendered using **`annotate-snippets`**:
 
-![Example parse error for invalid JSON Screenshot](https://raw.githubusercontent.com/ArneCode/marser/main/image.png)
+![Example parse error for invalid JSON Screenshot](https://raw.githubusercontent.com/ArneCode/marser/main/img/image.png)
 
 This parser can also still produce a recovered output:
 
@@ -140,7 +140,7 @@ The json example also has tracing support, so parsing can be stepped through in 
 
 Below is a comparison of the speed of different libraries for parsing json, including marser. I used json because there are already parsers using different libraries written for it
 
-<img src="https://github.com/ArneCode/marser/raw/main/chart.png" width="400">
+<img src="https://github.com/ArneCode/marser/raw/main/img/chart.png" width="400">
 
 Code for other libraries taken from [parse-rosetta](https://github.com/rosetta-rs/parse-rosetta-rs). Read more [here](https://github.com/ArneCode/json-parser-compare).
 
