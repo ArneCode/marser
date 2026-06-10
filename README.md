@@ -7,6 +7,7 @@ It supports:
 - **Multiple input formats** - use `&str` and `&[u8]` / `&[T]` or implement the `Input` trait yourself.
 - **Packrat-style caching** - just wrap your parsers in `.memoized()` to cache results at each position.
 - **Simple debugging** of your parsers using a custom TUI
+- **no_std**
 
 ## Quickstart
 
