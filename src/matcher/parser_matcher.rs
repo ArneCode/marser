@@ -42,7 +42,7 @@ impl<'src, Inp: Input<'src>, MRes, Pars, ParserOutput> super::internal::MatcherI
 where
     Pars: Parser<'src, Inp, Output = ParserOutput>,
     Inp: Input<'src>,
-    ParserOutput: PartialEq + Clone + std::fmt::Debug,
+    ParserOutput: PartialEq + Clone + core::fmt::Debug,
 {
     const CAN_MATCH_DIRECTLY: bool = true;
     const HAS_PROPERTY: bool = false;

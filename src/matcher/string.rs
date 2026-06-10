@@ -1,5 +1,12 @@
 //! Literal string / `&str` / [`char`] matchers over a `char` token stream.
 
+use alloc::{
+    boxed::Box,
+    string::{String, ToString},
+    vec::Vec,
+};
+use core::fmt::Display;
+
 use crate::{
     error::{MatcherRunError, error_handler::ErrorHandler},
     input::{Input, InputStream},
@@ -60,7 +67,7 @@ impl<'src, Inp: Input<'src, Token = char>, MRes> super::internal::MatcherImpl<'s
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         Some(Box::new(self.expected.iter().collect::<String>()))
     }
 }
@@ -105,7 +112,7 @@ impl<'src, Inp: Input<'src, Token = char>, MRes> super::internal::MatcherImpl<'s
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         Some(Box::new(self.to_string()))
     }
 }
@@ -135,7 +142,7 @@ impl<'src, Inp: Input<'src, Token = char>, MRes> super::internal::MatcherImpl<'s
         Ok(false)
     }
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         Some(Box::new(*self))
     }
 }
@@ -166,9 +173,9 @@ impl<'src, MRes> super::internal::MatcherImpl<'src, &'src [u8], MRes> for &[u8] 
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         Some(Box::new(
-            std::str::from_utf8(self).unwrap_or("<bytes>").to_string(),
+            core::str::from_utf8(self).unwrap_or("<bytes>").to_string(),
         ))
     }
 }
@@ -200,7 +207,7 @@ impl<'src, MRes> super::internal::MatcherImpl<'src, &'src [u8], MRes> for u8 {
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         Some(Box::new(format!("byte {self}")))
     }
 }

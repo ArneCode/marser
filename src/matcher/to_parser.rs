@@ -1,4 +1,5 @@
-use std::fmt::Display;
+use alloc::boxed::Box;
+use core::fmt::{self, Display};
 
 use crate::{
     context::ParserContext,
@@ -26,11 +27,11 @@ impl<Match, Output> ToParser<Match, Output> {
     }
 }
 
-impl<Match, Output> std::fmt::Debug for ToParser<Match, Output>
+impl<Match, Output> fmt::Debug for ToParser<Match, Output>
 where
-    Match: std::fmt::Debug,
+    Match: fmt::Debug,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("ToParser")
             .field("matcher", &self.matcher)
             .finish()

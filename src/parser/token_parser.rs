@@ -21,8 +21,8 @@ where
 {
 }
 
-impl<CheckF, ParseF> std::fmt::Debug for TokenParser<CheckF, ParseF> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<CheckF, ParseF> core::fmt::Debug for TokenParser<CheckF, ParseF> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         f.debug_struct("TokenParser").finish()
     }
 }

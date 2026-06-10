@@ -1,5 +1,8 @@
 //! Greedy repetition: parse zero or more `Pars` outputs, then fold with `combine_fn`.
 
+use alloc::vec::Vec;
+use core::fmt;
+
 use crate::{
     context::ParserContext,
     error::{MatcherRunError, error_handler::ErrorHandler},
@@ -14,11 +17,11 @@ pub struct MultipleParser<Pars, CombF> {
     combine_fn: CombF,
 }
 
-impl<Pars, CombF> std::fmt::Debug for MultipleParser<Pars, CombF>
+impl<Pars, CombF> fmt::Debug for MultipleParser<Pars, CombF>
 where
-    Pars: std::fmt::Debug,
+    Pars: fmt::Debug,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("MultipleParser")
             .field("parser", &self.parser)
             .finish()

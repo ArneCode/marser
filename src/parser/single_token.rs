@@ -1,6 +1,6 @@
 //! Exact single-token parsers: a literal value or a [`char`] literal.
 
-use std::fmt::Debug;
+use core::fmt::Debug;
 
 use crate::{
     context::ParserContext,

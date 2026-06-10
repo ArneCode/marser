@@ -5,7 +5,8 @@
 //! capture retry path can rewind and rerun with a recovery **non-memoizing backtracking runner**
 //! without nested `error_parser` work.
 
-use std::fmt::Display;
+use alloc::boxed::Box;
+use core::fmt::Display;
 
 use crate::{
     context::ParserContext,

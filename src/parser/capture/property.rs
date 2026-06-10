@@ -20,6 +20,8 @@
 //!   on [`SingleProperty`], [`MultipleProperty`], and [`OptionalProperty`] call `SingleSnapProj::project`
 //!   (or the multiple/optional equivalents) on that value.
 
+use alloc::vec::Vec;
+
 use super::match_result::{
     MatchResult, MatchResultMultiple, MatchResultOptional, MatchResultSingle,
 };

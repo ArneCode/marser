@@ -1,10 +1,10 @@
 //! Packrat-style memoization of parse results per `(parser_id, input_position)`.
 //! Memoized parser outputs need to implement clone. You can achieve this for example by using
 //! parser.map_output(Rc::new).memoized()
-use core::fmt;
-use std::fmt::Display;
-use std::marker::PhantomData;
-use std::sync::atomic::{AtomicUsize, Ordering};
+use alloc::boxed::Box;
+use core::fmt::{self, Display};
+use core::marker::PhantomData;
+use core::sync::atomic::{AtomicUsize, Ordering};
 
 use crate::parser::ParserCombinator;
 use crate::{

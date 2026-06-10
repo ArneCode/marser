@@ -7,7 +7,12 @@
 //! [`ErrorHandler::register_failure`] with the returned indexer. [`register_watermark`] tracks the
 //! furthest input position seen during the attempt for diagnostics.
 
-use std::{collections::HashSet, fmt::Display};
+use alloc::{
+    string::{String, ToString},
+    vec::Vec,
+};
+use core::fmt::Display;
+use hashbrown::HashSet;
 
 pub(crate) enum ErrorHandlerChoice<'a> {
     Empty(&'a mut EmptyErrorHandler),

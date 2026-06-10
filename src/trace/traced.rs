@@ -1,6 +1,12 @@
 //! Explicit `.trace()` combinators for marker-first tracing.
 
-use std::fmt::Display;
+use alloc::{
+    boxed::Box,
+    string::String,
+};
+use core::fmt::Display;
+#[cfg(feature = "parser-trace")]
+use core::panic::Location;
 
 #[cfg(feature = "parser-trace")]
 use crate::error::error_handler::ErrorHandlerChoice;
@@ -62,7 +68,7 @@ impl<I> Traced<I> {
     #[track_caller]
     /// Wrap `inner` in an explicit trace marker, optionally overriding the displayed label.
     pub fn new(inner: I, label: Option<String>) -> Self {
-        let caller = std::panic::Location::caller();
+        let caller = Location::caller();
         Self {
             inner,
             label,

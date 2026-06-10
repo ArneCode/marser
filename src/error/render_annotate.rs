@@ -3,10 +3,13 @@
 //! Pretty error rendering via [annotate-snippets](https://docs.rs/annotate-snippets).
 //! Compiled only with the `annotate-snippets` feature.
 
+use alloc::string::{String, ToString};
+use alloc::vec::Vec;
 use annotate_snippets::{
     AnnotationKind as SnippetAnnotationKind, Level as SnippetLevel, Renderer as SnippetRenderer,
     Snippet,
 };
+use core::ops::Range;
 
 use super::{AnnotationKind, ParserError};
 
@@ -88,7 +91,7 @@ pub(super) fn render_errors_slice_into(
 }
 
 #[inline]
-fn normalized_span(span: (usize, usize), source_len: usize) -> std::ops::Range<usize> {
+fn normalized_span(span: (usize, usize), source_len: usize) -> Range<usize> {
     let mut start = span.0.min(source_len);
     let mut end = span.1.min(source_len);
 

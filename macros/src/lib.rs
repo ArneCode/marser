@@ -452,12 +452,13 @@ impl<'ast> Visit<'ast> for BindCollector {
 
 /// Build the `(S, M, O)` tuple for [`Capture::<MRes, _, _>`] (explicit `as T` preserved; untyped values use `_`).
 fn build_capture_mres_tuple(registry: &BindRegistry) -> proc_macro2::TokenStream {
+    let marser = marser_crate_path();
     let build_bucket = |values: &[TypedBinding], spans: &[TypedBinding], is_vec: bool| {
         let wrap = |inner: proc_macro2::TokenStream| {
             if is_vec {
-                quote! { ::std::vec::Vec<#inner> }
+                quote! { #marser::__macro_support::Vec<#inner> }
             } else {
-                quote! { ::std::option::Option<#inner> }
+                quote! { ::core::option::Option<#inner> }
             }
         };
         let mut pieces = Vec::new();
@@ -519,6 +520,7 @@ fn build_capture_mres_tuple(registry: &BindRegistry) -> proc_macro2::TokenStream
 /// Separate from [`build_capture_mres_tuple`]: `Capture` keeps `_` for inference; the factory impl
 /// declares `__BindT0`, … so rustc can unify capture slots with `bind!` output types.
 fn build_factory_mres_tuple(registry: &BindRegistry) -> (proc_macro2::TokenStream, Vec<Ident>) {
+    let marser = marser_crate_path();
     let mut gen_names: Vec<Ident> = Vec::new();
     let mut next_ty = |span: Span| -> proc_macro2::TokenStream {
         let n = gen_names.len();
@@ -530,9 +532,9 @@ fn build_factory_mres_tuple(registry: &BindRegistry) -> (proc_macro2::TokenStrea
     let mut build_bucket = |values: &[TypedBinding], spans: &[TypedBinding], is_vec: bool| {
         let wrap = |inner: proc_macro2::TokenStream| {
             if is_vec {
-                quote! { ::std::vec::Vec<#inner> }
+                quote! { #marser::__macro_support::Vec<#inner> }
             } else {
-                quote! { ::std::option::Option<#inner> }
+                quote! { ::core::option::Option<#inner> }
             }
         };
         let mut pieces = Vec::new();

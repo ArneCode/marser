@@ -65,7 +65,8 @@ pub(crate) use runner::{DirectMatchRunner, MatchRunner, NoMemoizeBacktrackingRun
 pub use string::StringMatcher;
 pub use to_parser::ToParser;
 
-use std::{fmt::Display, ops::Deref, rc::Rc};
+use alloc::{boxed::Box, rc::Rc, string::ToString};
+use core::{fmt::Display, ops::Deref};
 
 use crate::{
     error::{MissingSyntax, UnwantedSyntax, error_handler::ErrorHandler},
@@ -74,7 +75,8 @@ use crate::{
 };
 
 pub(crate) mod internal {
-    use std::fmt::{Debug, Display};
+    use alloc::boxed::Box;
+    use core::fmt::{Debug, Display};
 
     use crate::{
         error::{MatcherRunError, error_handler::ErrorHandler},
@@ -229,7 +231,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         (**self).maybe_label()
     }
 }
@@ -260,7 +262,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         self.deref().maybe_label()
     }
 }
@@ -290,7 +292,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         (**self).maybe_label()
     }
 }

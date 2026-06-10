@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`no_std` support** with the `alloc` crate (heap-backed `Vec`, `String`, and related types). Use `default-features = false` on the `marser` dependency for embedded or other targets without `std`.
+- Cargo feature **`std`** (enabled by default) gates standard-library helpers such as `ParserError::eprint` / `write` and trace-to-file APIs.
+
+### Changed
+
+- Internal maps and sets use **`hashbrown`** so the same code path works with and without `std`.
+- **`parser-trace`** now requires **`std`** (file I/O and trace viewer workflows stay std-only).
+
 ## [0.1.4] - 2026-05-31
 
 ### Added

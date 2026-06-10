@@ -1,3 +1,6 @@
+use alloc::boxed::Box;
+use core::fmt::{self, Display};
+
 use crate::context::ParserContext;
 use crate::error::MatcherRunError;
 use crate::error::error_handler::ErrorHandler;
@@ -31,12 +34,12 @@ where
     }
 }
 
-impl<'a, 'src, Inp, Out> std::fmt::Debug for Erased<'a, 'src, Inp, Out>
+impl<'a, 'src, Inp, Out> fmt::Debug for Erased<'a, 'src, Inp, Out>
 where
     Inp: Input<'src> + 'a,
     Out: 'a,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Erased").finish()
     }
 }
@@ -70,7 +73,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         self.inner.maybe_label()
     }
 }

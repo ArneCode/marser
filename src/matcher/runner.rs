@@ -13,7 +13,8 @@
 //! - **Deferred captures** — [`MatchRunner::register_result`] stores [`crate::parser::capture::BoundResult`]
 //!   values at lifetime `'src`; they must not outlive the parse.
 
-use std::marker::PhantomData;
+use alloc::{boxed::Box, vec::Vec};
+use core::marker::PhantomData;
 
 use crate::{
     context::ParserContext,

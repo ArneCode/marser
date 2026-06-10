@@ -1,6 +1,6 @@
 //! Committing sequence: after `commit_on` succeeds, failure in `then_matcher` becomes a hard error.
 
-use std::mem::swap;
+use core::mem::swap;
 
 use crate::{
     cache::Cache,

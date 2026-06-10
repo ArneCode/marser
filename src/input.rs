@@ -8,7 +8,7 @@
 //! For `&str` inputs, [`Input::try_consume_prefix_bytes`] offers a memcmp-style
 //! fast path for ASCII literal prefixes on UTF-8 byte storage.
 
-use std::ops::Range;
+use core::ops::Range;
 
 /// Stream-like source that parsers and matchers can read from.
 pub trait Input<'src> {

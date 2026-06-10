@@ -6,7 +6,9 @@
 //! We cannot use dyn Any because Any requires our values to be static but we want to allow for zero-copy parsing.
 //! Existing libraries I could find either require that Values are static or some trait of that library is defined on them.
 //!
-use std::{collections::HashMap, marker::PhantomData};
+use alloc::{boxed::Box, vec::Vec};
+use core::marker::PhantomData;
+use hashbrown::HashMap;
 
 type MemoTable<T> = Vec<T>;
 pub(crate) type ParserId = usize;
@@ -85,8 +87,6 @@ pub(crate) struct Cache<'src> {
     // where every pos corresponds to a Vec<(parser_id, (table_id, entry_id))
     // then for lookup just need to look through a small number of entries at pos and compare parser_id.
     // Pegen does something similar but stores linked list at every pos
-
-    //TODO: use a faster HashMap implementation
 
     // (parser_id, pos) -> Optional<(table_id, entry_id>)
     index: HashMap<(ParserId, usize), (usize, EntryId)>,

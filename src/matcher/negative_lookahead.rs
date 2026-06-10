@@ -55,7 +55,8 @@ where
     {
         let original_pos = input.get_pos();
         let mut inner_error_handler = EmptyErrorHandler::new(0);
-        let can_match = runner.run_match::<_, M, _>(&self.checker, &mut inner_error_handler, input)?;
+        let can_match =
+            runner.run_match::<_, M, _>(&self.checker, &mut inner_error_handler, input)?;
         input.set_pos(original_pos);
         Ok(!can_match)
     }

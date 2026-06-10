@@ -11,7 +11,9 @@
 //!
 //! Error-recovery pass selection is via [`crate::mode::Mode`] at the parse driver, not context fields.
 
-use std::collections::HashSet;
+use alloc::vec::Vec;
+use core::marker::PhantomData;
+use hashbrown::HashSet;
 
 use crate::cache::Cache;
 use crate::error::ParserError;
@@ -28,7 +30,7 @@ pub struct ParserContext<'src> {
     pub error_stack: Vec<ParserError>,
     #[cfg(feature = "parser-trace")]
     pub(crate) trace: Option<TraceState>,
-    _marker: std::marker::PhantomData<&'src ()>,
+    _marker: PhantomData<&'src ()>,
 }
 
 impl<'src> ParserContext<'src> {
@@ -41,7 +43,7 @@ impl<'src> ParserContext<'src> {
             error_stack: Vec::new(),
             #[cfg(feature = "parser-trace")]
             trace: None,
-            _marker: std::marker::PhantomData,
+            _marker: PhantomData,
         }
     }
 

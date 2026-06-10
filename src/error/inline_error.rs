@@ -1,4 +1,6 @@
-use std::fmt;
+use alloc::string::String;
+use alloc::vec::Vec;
+use core::fmt;
 
 use crate::parser::capture::MatchResult;
 
@@ -130,14 +132,16 @@ impl InlineError {
         self
     }
 
-    #[cfg(feature = "annotate-snippets")]
-    /// Print to stderr (requires **`annotate-snippets`** feature).
+    /// Print to stderr (requires **`annotate-snippets`** and **`std`** features).
+    #[cfg(all(feature = "annotate-snippets", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "annotate-snippets", feature = "std"))))]
     pub fn eprint(&self, source_id: &str, source_text: &str) {
         crate::error::ParserError::Inline(self.clone()).eprint(source_id, source_text);
     }
 
-    #[cfg(feature = "annotate-snippets")]
-    /// Write to `sink` (requires **`annotate-snippets`** feature).
+    /// Write to `sink` (requires **`annotate-snippets`** and **`std`** features).
+    #[cfg(all(feature = "annotate-snippets", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "annotate-snippets", feature = "std"))))]
     pub fn write(&self, source_id: &str, source_text: &str, sink: impl std::io::Write) {
         crate::error::ParserError::Inline(self.clone()).write(source_id, source_text, sink);
     }

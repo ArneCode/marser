@@ -11,6 +11,8 @@
 //! The per-bucket traits ([`MatchResultSingle`], [`MatchResultMultiple`], [`MatchResultOptional`])
 //! split tuple fields so generated code can index value vs optional vs repeated columns separately.
 
+use alloc::vec::Vec;
+
 use super::property::{
     MultipleProperty, MultipleSnapProj, MultipleSnapProjAt, OptionalProperty, OptionalSnapProj,
     OptionalSnapProjAt, SingleProperty, SingleSnapProj, SingleSnapProjAt,
@@ -418,7 +420,7 @@ macro_rules! impl_match_results_for_tuple {
 
             #[inline]
             fn new() -> Self {
-                ($( { let _: std::marker::PhantomData<$T>; None },)+ )
+                ($( { let _: core::marker::PhantomData<$T>; None },)+ )
             }
 
             #[inline]
@@ -476,7 +478,7 @@ macro_rules! impl_match_results_for_tuple {
 
             #[inline]
             fn new() -> Self {
-                ($( { let _: std::marker::PhantomData<$T>; Vec::new() },)+ )
+                ($( { let _: core::marker::PhantomData<$T>; Vec::new() },)+ )
             }
 
             #[inline]
@@ -530,7 +532,7 @@ macro_rules! impl_match_results_for_tuple {
 
             #[inline]
             fn new() -> Self {
-                ($( { let _: std::marker::PhantomData<$T>; None },)+ )
+                ($( { let _: core::marker::PhantomData<$T>; None },)+ )
             }
 
             #[inline]

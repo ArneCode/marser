@@ -14,11 +14,11 @@ pub struct SpanBinder<Match, Prop> {
     pub(super) property: Prop,
 }
 
-impl<Match, Prop> std::fmt::Debug for SpanBinder<Match, Prop>
+impl<Match, Prop> core::fmt::Debug for SpanBinder<Match, Prop>
 where
-    Match: std::fmt::Debug,
+    Match: core::fmt::Debug,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         f.debug_struct("SpanBinder")
             .field("matcher", &self.matcher)
             .finish()

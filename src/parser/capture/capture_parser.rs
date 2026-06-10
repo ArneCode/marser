@@ -1,5 +1,6 @@
-use std::fmt::Display;
-use std::marker::PhantomData;
+use alloc::boxed::Box;
+use core::fmt::{self, Display};
+use core::marker::PhantomData;
 
 use crate::{
     context::ParserContext,
@@ -36,11 +37,11 @@ where
     }
 }
 
-impl<MRes, Match, F> std::fmt::Debug for Capture<MRes, Match, F>
+impl<MRes, Match, F> fmt::Debug for Capture<MRes, Match, F>
 where
-    Match: std::fmt::Debug,
+    Match: fmt::Debug,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Capture")
             .field("matcher", &self.matcher)
             .finish()

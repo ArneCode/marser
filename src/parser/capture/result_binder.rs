@@ -1,4 +1,5 @@
-use std::marker::PhantomData;
+use core::fmt;
+use core::marker::PhantomData;
 
 use crate::{
     error::{MatcherRunError, error_handler::ErrorHandler},
@@ -17,8 +18,8 @@ pub struct ResultBinder<Pars, Prop, Inp> {
     pub(super) _phantom: PhantomData<Inp>,
 }
 
-impl<Pars, Prop, Inp> std::fmt::Debug for ResultBinder<Pars, Prop, Inp> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<Pars, Prop, Inp> fmt::Debug for ResultBinder<Pars, Prop, Inp> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("ResultBinder").finish()
     }
 }

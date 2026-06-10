@@ -1,6 +1,7 @@
 //! Matchers and parsers that only participate while real error handling is active.
 
-use std::fmt::Display;
+use alloc::boxed::Box;
+use core::fmt::Display;
 
 use crate::error::MatcherRunError;
 use crate::matcher::internal::MatcherImpl;

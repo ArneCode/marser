@@ -1,7 +1,8 @@
 //! Error recovery: if the inner parser fails with [`crate::error::FurthestFailError`], try an alternate matcher.
 
-use std::fmt::Display;
-use std::sync::atomic::AtomicUsize;
+use alloc::boxed::Box;
+use core::fmt::Display;
+use core::sync::atomic::{AtomicUsize, Ordering};
 
 use crate::{
     context::ParserContext,
@@ -20,12 +21,12 @@ pub struct ErrorRecoverer<HappyParser, RecoveryParser> {
     id: usize,
 }
 
-impl<Pars, RecoveryParser> std::fmt::Debug for ErrorRecoverer<Pars, RecoveryParser>
+impl<Pars, RecoveryParser> core::fmt::Debug for ErrorRecoverer<Pars, RecoveryParser>
 where
-    Pars: std::fmt::Debug,
-    RecoveryParser: std::fmt::Debug,
+    Pars: core::fmt::Debug,
+    RecoveryParser: core::fmt::Debug,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         f.debug_struct("ErrorRecoverer")
             .field("happy", &self.happy)
             .field("recover_parser", &self.recover_parser)
@@ -39,7 +40,7 @@ impl<HappyParser, RecoveryParser> ErrorRecoverer<HappyParser, RecoveryParser> {
         Self {
             happy,
             recover_parser,
-            id: NEXT_RECOVER_ID.fetch_add(1, std::sync::atomic::Ordering::Relaxed),
+            id: NEXT_RECOVER_ID.fetch_add(1, Ordering::Relaxed),
         }
     }
 }

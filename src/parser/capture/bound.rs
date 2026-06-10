@@ -1,3 +1,5 @@
+use alloc::boxed::Box;
+
 use crate::parser::capture::MatchResult;
 
 use super::property::{BindDebugInfo, Property};

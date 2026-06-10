@@ -1,6 +1,7 @@
 //! Parse a single token that lies in a Rust [`RangeBounds`] (or use [`Range`] / [`RangeInclusive`] directly as parsers).
 
-use std::{
+use alloc::boxed::Box;
+use core::{
     fmt::{Debug, Display},
     ops::{Range, RangeBounds, RangeInclusive},
 };

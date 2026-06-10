@@ -57,7 +57,8 @@ pub use multiple::MultipleParser;
 pub use range_parser::RangeParser;
 pub use recover_error::ErrorRecoverer;
 pub use single_token::SingleTokenParser;
-use std::rc::Rc;
+use alloc::{boxed::Box, rc::Rc, vec::Vec};
+use core::fmt::Display;
 pub use token_parser::{TokenParser, token_parser};
 
 #[cfg(feature = "parser-trace")]
@@ -79,7 +80,8 @@ use crate::{
 };
 
 pub(crate) mod internal {
-    use std::fmt::{Debug, Display};
+    use alloc::boxed::Box;
+    use core::fmt::{Debug, Display};
 
     use crate::{
         context::ParserContext,
@@ -219,7 +221,8 @@ where
     }
 
     /// Traced parse and write the session to `trace_path` (no source snapshot; spans are positions in `input`).
-    #[cfg(feature = "parser-trace")]
+    #[cfg(all(feature = "parser-trace", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "parser-trace", feature = "std"))))]
     fn parse_whole_input_with_trace_to_file(
         &self,
         input: Inp,
@@ -246,7 +249,8 @@ where
     }
 
     /// Like [`Self::parse_whole_input_with_trace_to_file`], and records `src` as trace source text.
-    #[cfg(feature = "parser-trace")]
+    #[cfg(all(feature = "parser-trace", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "parser-trace", feature = "std"))))]
     fn parse_str_with_trace_to_file(
         &self,
         src: &'src str,
@@ -421,7 +425,7 @@ where
     }
 }
 
-pub(crate) trait ParserObjSafe<'src, Inp: Input<'src>, Output>: std::fmt::Debug {
+pub(crate) trait ParserObjSafe<'src, Inp: Input<'src>, Output>: core::fmt::Debug {
     fn parse(
         &self,
         context: &mut ParserContext<'src>,
@@ -430,7 +434,7 @@ pub(crate) trait ParserObjSafe<'src, Inp: Input<'src>, Output>: std::fmt::Debug 
         input: &mut InputStream<'src, Inp>,
     ) -> Result<Option<Output>, MatcherRunError>;
 
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>>;
+    fn maybe_label(&self) -> Option<Box<dyn Display>>;
 
     fn clone_boxed<'a>(&self) -> Box<dyn ParserObjSafe<'src, Inp, Output> + 'a>
     where
@@ -453,7 +457,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         <Self as internal::ParserImpl<'src, Inp>>::maybe_label(self)
     }
 
@@ -486,7 +490,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         (**self).maybe_label()
     }
 }
@@ -510,7 +514,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         (**self).maybe_label()
     }
 }
@@ -534,7 +538,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         (**self).maybe_label()
     }
 }

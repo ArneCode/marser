@@ -10,7 +10,7 @@
 //!
 //! # Rendering
 //!
-//! [`ParserError`], [`FurthestFailError`], and [`InlineError`] implement [`std::fmt::Display`] for plain
+//! [`ParserError`], [`FurthestFailError`], and [`InlineError`] implement [`core::fmt::Display`] for plain
 //! text (span positions and messages; no source snippet).
 //!
 //! With the **`annotate-snippets`** feature, use [`ParserError::eprint`] / [`FurthestFailError::eprint`]
@@ -20,6 +20,10 @@
 //!
 //! See [`crate::guide::errors_and_recovery`] for soft vs hard failure, [`commit_on`](crate::matcher::commit_on),
 //! recovery (`recover_with`), and inline diagnostics.
+
+use alloc::string::{String, ToString};
+use alloc::vec::Vec;
+use core::fmt;
 
 mod inline_error;
 #[cfg(feature = "annotate-snippets")]
@@ -52,16 +56,18 @@ impl ParserError {
         }
     }
 
-    #[cfg(feature = "annotate-snippets")]
-    /// Print this error to stderr (requires **`annotate-snippets`** feature).
+    /// Print this error to stderr (requires **`annotate-snippets`** and **`std`** features).
+    #[cfg(all(feature = "annotate-snippets", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "annotate-snippets", feature = "std"))))]
     pub fn eprint(&self, source_id: &str, source_text: &str) {
         let mut out = String::new();
         self.render_into(&mut out, source_id, source_text);
         eprint!("{}", out);
     }
 
-    #[cfg(feature = "annotate-snippets")]
-    /// Write this error to `sink` (requires **`annotate-snippets`** feature).
+    /// Write this error to `sink` (requires **`annotate-snippets`** and **`std`** features).
+    #[cfg(all(feature = "annotate-snippets", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "annotate-snippets", feature = "std"))))]
     pub fn write(&self, source_id: &str, source_text: &str, mut sink: impl std::io::Write) {
         let mut out = String::new();
         self.render_into(&mut out, source_id, source_text);
@@ -71,15 +77,16 @@ impl ParserError {
     #[cfg(feature = "annotate-snippets")]
     fn render_into(&self, out: &mut String, source_id: &str, source_text: &str) {
         render_annotate::render_errors_slice_into(
-            std::slice::from_ref(self),
+            core::slice::from_ref(self),
             out,
             source_id,
             source_text,
         );
     }
 
-    #[cfg(feature = "annotate-snippets")]
-    /// Print all errors to stderr (requires **`annotate-snippets`** feature).
+    /// Print all errors to stderr (requires **`annotate-snippets`** and **`std`** features).
+    #[cfg(all(feature = "annotate-snippets", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "annotate-snippets", feature = "std"))))]
     pub fn eprint_many(errors: &[ParserError], source_id: &str, source_text: &str) {
         if errors.is_empty() {
             return;
@@ -89,8 +96,9 @@ impl ParserError {
         eprint!("{}", out);
     }
 
-    #[cfg(feature = "annotate-snippets")]
-    /// Write all errors to `sink` (requires **`annotate-snippets`** feature).
+    /// Write all errors to `sink` (requires **`annotate-snippets`** and **`std`** features).
+    #[cfg(all(feature = "annotate-snippets", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "annotate-snippets", feature = "std"))))]
     pub fn write_many(
         errors: &[ParserError],
         source_id: &str,
@@ -106,8 +114,8 @@ impl ParserError {
     }
 }
 
-impl std::fmt::Display for ParserError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl fmt::Display for ParserError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             ParserError::FurthestFail(e) => e.fmt(f),
             ParserError::Inline(e) => e.fmt(f),
@@ -202,14 +210,16 @@ impl FurthestFailError {
         self
     }
 
-    #[cfg(feature = "annotate-snippets")]
-    /// Print to stderr (requires **`annotate-snippets`** feature).
+    /// Print to stderr (requires **`annotate-snippets`** and **`std`** features).
+    #[cfg(all(feature = "annotate-snippets", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "annotate-snippets", feature = "std"))))]
     pub fn eprint(&self, source_id: &str, source_text: &str) {
         ParserError::FurthestFail(self.clone()).eprint(source_id, source_text);
     }
 
-    #[cfg(feature = "annotate-snippets")]
-    /// Write to `sink` (requires **`annotate-snippets`** feature).
+    /// Write to `sink` (requires **`annotate-snippets`** and **`std`** features).
+    #[cfg(all(feature = "annotate-snippets", feature = "std"))]
+    #[cfg_attr(docsrs, doc(cfg(all(feature = "annotate-snippets", feature = "std"))))]
     pub fn write(&self, source_id: &str, source_text: &str, sink: impl std::io::Write) {
         ParserError::FurthestFail(self.clone()).write(source_id, source_text, sink);
     }
@@ -255,8 +265,8 @@ impl From<InlineError> for ParserError {
     }
 }
 
-impl std::fmt::Display for FurthestFailError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl fmt::Display for FurthestFailError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let expected_msg = match self.expected.len() {
             0 => "unexpected token".to_string(),
             1 => format!("expected {}", self.expected[0]),
@@ -280,8 +290,8 @@ impl std::fmt::Display for FurthestFailError {
     }
 }
 
-impl std::fmt::Debug for FurthestFailError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl fmt::Debug for FurthestFailError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("FurthestFailError")
             .field("span", &self.span)
             .field("expected", &self.expected)
@@ -302,8 +312,8 @@ pub enum MatcherRunError {
     RetryRerunNeeded,
 }
 
-impl std::fmt::Display for MatcherRunError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl fmt::Display for MatcherRunError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             MatcherRunError::FurthestFail(e) => write!(f, "{e}"),
             MatcherRunError::RetryRerunNeeded => write!(f, "retry rerun needed"),

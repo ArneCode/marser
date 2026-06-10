@@ -1,4 +1,5 @@
-use std::fmt::Display;
+use alloc::boxed::Box;
+use core::fmt::{self, Display};
 
 use crate::{
     context::ParserContext,
@@ -14,11 +15,11 @@ pub struct OutputMapper<Parser, MapFn> {
     map_fn: MapFn,
 }
 
-impl<Parser, MapFn> std::fmt::Debug for OutputMapper<Parser, MapFn>
+impl<Parser, MapFn> fmt::Debug for OutputMapper<Parser, MapFn>
 where
-    Parser: std::fmt::Debug,
+    Parser: fmt::Debug,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("OutputMapper")
             .field("parser", &self.parser)
             .finish()

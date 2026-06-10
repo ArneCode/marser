@@ -4,7 +4,8 @@
 //! (`ParserContext::push_stack_error`, crate-private) whenever the inner pattern matches; the matcher
 //! runner truncates the error stack on failed branches so exploratory matches do not leak stale errors.
 
-use std::fmt;
+use alloc::string::String;
+use core::fmt;
 
 use crate::{
     error::{BuildInlineError, MatchDiagCtx, MatcherRunError, ParserError},

@@ -5,6 +5,7 @@
 
 The full crate introduction is in `README.md` at the repository root. For book-style chapters in rustdoc (`marser::guide`), build docs with **`--features embed-guide`** (this matches the docs.rs build)."
 )]
+#![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![deny(missing_docs)]
 // `Parser` and `Matcher` are sealed via `pub(crate)` supertraits (`ParserImpl`,
@@ -15,7 +16,15 @@ The full crate introduction is in `README.md` at the repository root. For book-s
 // or implement `ParserImpl`/`MatcherImpl`, so the "reachability" the lint warns
 // about is purely nominal.
 #![allow(private_bounds, private_interfaces)]
+#[macro_use]
+extern crate alloc;
 extern crate self as marser;
+
+/// Types referenced by [`marser_macros`] expansions (`capture!`, `use_binds!`).
+#[doc(hidden)]
+pub mod __macro_support {
+    pub use alloc::vec::Vec;
+}
 
 pub(crate) mod cache;
 pub(crate) mod context;
@@ -43,8 +52,8 @@ pub mod trace;
 
 pub use marser_macros::capture;
 
-use std::rc::Rc;
-#[cfg(feature = "parser-trace")]
+use alloc::{rc::Rc, vec::Vec};
+#[cfg(all(feature = "parser-trace", feature = "std"))]
 use std::{fs::File, io, path::Path};
 
 #[cfg(feature = "parser-trace")]
@@ -107,7 +116,8 @@ where
         )) => result
     );
 
-    let first = eof_wrapped.parse::<Emit<false, false>>(&mut context, &mut error_handler, &mut input);
+    let first =
+        eof_wrapped.parse::<Emit<false, false>>(&mut context, &mut error_handler, &mut input);
     match first {
         Ok(Some(out)) => Ok((out, context.get_errors())),
         Ok(None) => {
@@ -120,7 +130,11 @@ where
         Err(MatcherRunError::RetryRerunNeeded) => {
             input.set_pos(start_pos.clone());
             context = ParserContext::new();
-            match eof_wrapped.parse::<Emit<true, false>>(&mut context, &mut error_handler, &mut input) {
+            match eof_wrapped.parse::<Emit<true, false>>(
+                &mut context,
+                &mut error_handler,
+                &mut input,
+            ) {
                 Ok(Some(out)) => Ok((out, context.get_errors())),
                 Ok(None) => {
                     let p: usize = input.get_pos().into();
@@ -225,9 +239,10 @@ where
     result.map(|(output, errors)| (output, errors, trace))
 }
 
-#[cfg(feature = "parser-trace")]
-#[derive(Debug)]
 /// Error returned by [`parse_with_trace_to_file`].
+#[cfg(all(feature = "parser-trace", feature = "std"))]
+#[cfg_attr(docsrs, doc(cfg(all(feature = "parser-trace", feature = "std"))))]
+#[derive(Debug)]
 pub enum ParseWithTraceToFileError {
     /// Parsing failed with a hard error.
     Parse(FurthestFailError),
@@ -235,21 +250,21 @@ pub enum ParseWithTraceToFileError {
     Io(io::Error),
 }
 
-#[cfg(feature = "parser-trace")]
+#[cfg(all(feature = "parser-trace", feature = "std"))]
 impl From<FurthestFailError> for ParseWithTraceToFileError {
     fn from(value: FurthestFailError) -> Self {
         Self::Parse(value)
     }
 }
 
-#[cfg(feature = "parser-trace")]
+#[cfg(all(feature = "parser-trace", feature = "std"))]
 impl From<io::Error> for ParseWithTraceToFileError {
     fn from(value: io::Error) -> Self {
         Self::Io(value)
     }
 }
 
-#[cfg(feature = "parser-trace")]
+#[cfg(all(feature = "parser-trace", feature = "std"))]
 pub(crate) fn write_trace_to_file(
     trace: &TraceSession,
     trace_path: impl AsRef<Path>,
@@ -263,11 +278,12 @@ pub(crate) fn write_trace_to_file(
     Ok(())
 }
 
-#[cfg(feature = "parser-trace")]
 /// Parse `src`, write the trace to `trace_path`, and return the normal parse result.
 ///
 /// The written trace includes the original source text so viewer tooling can
 /// show spans against the source.
+#[cfg(all(feature = "parser-trace", feature = "std"))]
+#[cfg_attr(docsrs, doc(cfg(all(feature = "parser-trace", feature = "std"))))]
 pub fn parse_with_trace_to_file<'src, Pars, Out: 'src>(
     parser: Pars,
     src: &'src str,

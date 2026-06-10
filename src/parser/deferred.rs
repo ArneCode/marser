@@ -3,10 +3,10 @@
 //! Use [`recursive`] to obtain a [`Deferred`] handle, build a parser that closes over
 //! [`DeferredWeak`], then parse through the strong [`Deferred`].
 
-use std::{
-    cell::OnceCell,
-    rc::{Rc, Weak},
-};
+use alloc::boxed::Box;
+use alloc::rc::{Rc, Weak};
+use core::cell::OnceCell;
+use core::fmt::{self, Display};
 
 use crate::{
     context::ParserContext,
@@ -29,8 +29,8 @@ impl<'a, 'src, Inp, Output> Clone for Deferred<'a, 'src, Inp, Output> {
     }
 }
 
-impl<'a, 'src, Inp, Output> std::fmt::Debug for Deferred<'a, 'src, Inp, Output> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<'a, 'src, Inp, Output> fmt::Debug for Deferred<'a, 'src, Inp, Output> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Deferred").finish()
     }
 }
@@ -53,11 +53,11 @@ impl<'a, 'src, Inp, Output> Clone for DeferredWeak<'a, 'src, Inp, Output> {
     }
 }
 
-impl<'a, 'src, Inp, Output> std::fmt::Debug for DeferredWeak<'a, 'src, Inp, Output>
+impl<'a, 'src, Inp, Output> fmt::Debug for DeferredWeak<'a, 'src, Inp, Output>
 where
     Inp: Input<'src>,
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("DeferredWeak").finish()
     }
 }
@@ -121,7 +121,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         self.parser.get().and_then(|p| p.maybe_label())
     }
 }
@@ -144,11 +144,11 @@ where
         if let Some(parser) = self.parser.upgrade() {
             if let Some(parser) = parser.get() {
                 parser.parse(
-                context,
-                ConcreteMode::from_mode::<M>(),
-                error_handler.to_choice(),
-                input,
-            )
+                    context,
+                    ConcreteMode::from_mode::<M>(),
+                    error_handler.to_choice(),
+                    input,
+                )
             } else {
                 panic!("Deferred parser was not set before parsing")
             }
@@ -158,7 +158,7 @@ where
     }
 
     #[inline]
-    fn maybe_label(&self) -> Option<Box<dyn std::fmt::Display>> {
+    fn maybe_label(&self) -> Option<Box<dyn Display>> {
         let cell = self.parser.upgrade()?;
         cell.get()?.maybe_label()
     }

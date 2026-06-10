@@ -30,7 +30,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "92570a3f9c98e7e84df84b71d0965ac99b1871fcd75a3773a3bd1bad13f64cf7"
 dependencies = [
  "anstyle",
- "memchr",
  "unicode-width 0.2.2",
 ]
 
@@ -362,6 +361,7 @@ dependencies = [
  "allocator-api2",
  "equivalent",
  "foldhash",
+ "rustc-std-workspace-alloc",
 ]
 
 [[package]]
@@ -509,6 +509,7 @@ version = "0.1.4"
 dependencies = [
  "annotate-snippets",
  "criterion",
+ "hashbrown 0.15.5",
  "marser-trace-schema",
  "marser_macros",
  "serde",
@@ -750,6 +751,12 @@ name = "regex-syntax"
 version = "0.8.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
+
+[[package]]
+name = "rustc-std-workspace-alloc"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f9d441c3b2ebf55cebf796bfdc265d67fa09db17b7bb6bd4be75c509e1e8fec3"
 
 [[package]]
 name = "rustix"

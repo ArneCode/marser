@@ -79,14 +79,12 @@ Runnable examples live under [`examples/`](examples/README.md) (see also [below]
 
 ## Cargo features
 
-| Feature                 | When you need it                                                                                                                                                                                                                                 |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| *(default)*             | Core library only.                                                                                                                                                                                                                               |
-| **`annotate-snippets`** | Enables rendering of error messages using the annotate-snippets crate                                                                                                                                                                            |
-| **`parser-trace`**      | **Experimental:** record parser traces to replay them in the trace viewer TUI. See the [tracing guide](https://docs.rs/marser/latest/marser/guide/tracing_and_debugging/index.html) and [`marser-trace-viewer/`](marser-trace-viewer/README.md). |
+| Feature                 | When you need it                                                                                                                                                                                                                                                      |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`std`** *(default)*   | Standard-library integration: `ParserError::eprint` / `write`, trace-to-file helpers, and other I/O. Disable with `default-features = false` for embedded or other **`no_std` + `alloc`** targets.                                                                    |
+| **`annotate-snippets`** | Rich terminal diagnostics via [annotate-snippets](https://docs.rs/annotate-snippets). Works on `no_std` builds for string rendering; `eprint` / `write` still need **`std`**.                                                                                         |
+| **`parser-trace`**      | **Experimental:** record parser traces to replay them in the trace viewer TUI (requires **`std`**). See the [tracing guide](https://docs.rs/marser/latest/marser/guide/tracing_and_debugging/index.html) and [`marser-trace-viewer/`](marser-trace-viewer/README.md). |
 
-
-**Compatibility:** Releases follow semver for the **documented public API**. Everyday composition (`capture!`, matchers, errors) is intended to stay stable across minors; **tracing** and trace crates may evolve faster. Macro **expansion** details are not a stability guarantee — please use macros as APIs, not generated internals.
 
 ## Requirements
 
