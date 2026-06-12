@@ -6,6 +6,8 @@ Trace files, replay, and debugging parsers.
 
 </div>
 
+<img width="1126" height="531" alt="grafik" src="https://github.com/user-attachments/assets/e0ba9ef1-ca19-4f30-937d-279b718e58da" />
+
 # Tracing and Debugging
 
 **Experimental:** Tracing APIs, on-disk trace formats, and the companion crates
