@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-06-18
+
 ### Changed
 
 - README image URLs are pinned to a fixed commit so screenshots stay stable on docs.rs and crates.io; repository links in the README use absolute GitHub URLs so they resolve on docs.rs as well as on GitHub and crates.io. The embedded guide, trace-crate READMEs, and example-path references use the same absolute URL patterns (docs.rs-first for Cargo features and tracing docs).
@@ -94,6 +96,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Trace file formats and trace-related APIs may change in future releases; pin versions and read release notes when upgrading.
 - Macro expansion details are not a stability guarantee; use `capture!` and documented helpers as the public API.
 
+[0.2.0]: https://github.com/ArneCode/marser/releases/tag/0.2.0
 [0.1.4]: https://github.com/ArneCode/marser/releases/tag/0.1.4
 [0.1.3]: https://github.com/ArneCode/marser/releases/tag/0.1.3
 [0.1.2]: https://github.com/ArneCode/marser/releases/tag/0.1.2
