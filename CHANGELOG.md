@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-06-18
+
+### Fixed
+- linked to wrong image for trace-viewer. Fixed it.
+
 ## [0.2.0] - 2026-06-18
 
 ### Changed
@@ -96,6 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Trace file formats and trace-related APIs may change in future releases; pin versions and read release notes when upgrading.
 - Macro expansion details are not a stability guarantee; use `capture!` and documented helpers as the public API.
 
+[0.2.1]: https://github.com/ArneCode/marser/releases/tag/0.2.1
 [0.2.0]: https://github.com/ArneCode/marser/releases/tag/0.2.0
 [0.1.4]: https://github.com/ArneCode/marser/releases/tag/0.1.4
 [0.1.3]: https://github.com/ArneCode/marser/releases/tag/0.1.3
