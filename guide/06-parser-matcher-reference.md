@@ -148,7 +148,7 @@ Successful memoized outputs are returned as `Rc<Output>`.
 Use it for expensive or recursive rules that may be reached repeatedly from the
 same position.
 
-### `Deferred`, `DeferredWeak`, and `recursive`
+### `Deferred`, `DeferredWeak`, `recursive`, and `recursive2`–`recursive12`
 
 `recursive(...)` creates a parser that can refer to itself while it is being
 built.
@@ -161,6 +161,39 @@ let value = recursive(|value| {
 
 Use it for nested languages such as JSON values, parenthesized expressions, and
 blocks.
+
+When **two or more rules refer to each other**, use `recursive2` through
+`recursive12` instead of chaining several `recursive` calls. Pick the helper whose
+suffix matches how many mutually recursive parsers you need (for example,
+`recursive3` for three rules). The closure receives [`DeferredWeak`](crate::parser::DeferredWeak) handles in the
+same order as the returned strong [`Deferred`](crate::parser::Deferred) parsers and must return the
+finished parsers in that order; the strong handles are filled before the helper
+returns.
+
+```rust,ignore
+use marser::capture;
+use marser::one_of::one_of;
+use marser::parser::{recursive2, Parser};
+
+let (number, flag) = recursive2(|number, flag| {
+    let recursive_number =
+        capture!(('n', bind!(flag.clone(), flag_value)) => if flag_value { 1 } else { 2 });
+    let terminal_number = '0'.to(0usize);
+
+    let recursive_flag =
+        capture!(('f', bind!(number.clone(), number_value)) => number_value == 0);
+    let terminal_flag = 't'.to(true);
+
+    (
+        one_of((recursive_number, terminal_number)),
+        one_of((recursive_flag, terminal_flag)),
+    )
+});
+```
+
+Clone the weak handles (`number.clone()`, `flag.clone()`, …) wherever a sibling
+rule needs to call back into another deferred parser. For a single self-referential
+rule, prefer [`recursive`](crate::parser::recursive) alone.
 
 ### `Erased`
 
