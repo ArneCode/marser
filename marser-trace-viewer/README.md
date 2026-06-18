@@ -67,5 +67,5 @@ marser-trace-viewer --trace /tmp/json-trace.json --source tests/data/json1.json
 
 ## Related docs
 
-See `guide/07-tracing-and-debugging.md` for the tracing API (`parse_with_trace`,
+See the [Tracing and Debugging guide](https://docs.rs/marser/latest/marser/guide/tracing_and_debugging/index.html) for the tracing API (`parse_with_trace`,
 `parse_with_trace_to_file`) and detailed replay semantics.

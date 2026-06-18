@@ -6,7 +6,7 @@ Trace files, replay, and debugging parsers.
 
 </div>
 
-<img width="1126" height="531" alt="grafik" src="https://github.com/user-attachments/assets/e0ba9ef1-ca19-4f30-937d-279b718e58da" />
+<img width="1126" height="531" alt="Trace viewer stepping through the JSON parser" src="https://raw.githubusercontent.com/ArneCode/marser/feaabd44f8d684642c820363f5387fbccdea3f03/img/Screenshot%202026-05-22%20144516.png" />
 
 # Tracing and Debugging
 
@@ -16,8 +16,7 @@ and API changes between releases; pin versions and read release notes when you
 upgrade.
 
 `marser` can emit structured parser runtime events when built with the
-`parser-trace` feature (see also the README sections *Cargo features* and
-*Experimental tracing*).
+`parser-trace` feature (see the [**`parser-trace`** row in Cargo features](https://docs.rs/marser/latest/marser/#cargo-features) on docs.rs).
 
 Use tracing when the grammar is *almost* right but you need to see **which branch ran, where backtracking happened, and where committed parsing stopped being recoverable**. For ordinary syntax errors, start with [Errors and Recovery](crate::guide::errors_and_recovery); reach for tracing when static reading of the grammar is no longer enough.
 
@@ -42,10 +41,10 @@ cargo install marser-trace-viewer
 marser-trace-viewer --trace /tmp/json-trace.json --source tests/data/json1.json
 ```
 
-## Learn by example: `examples/json/grammar.rs`
+## Learn by example: [`examples/json/grammar.rs`](https://github.com/ArneCode/marser/blob/main/examples/json/grammar.rs)
 
 If you want to get an immediate feel for what tracing looks like in a realistic
-grammar, start with `examples/json/grammar.rs` (build and run the **`json`** example from `examples/json/main.rs` for CLI and `--trace-file`).
+grammar, start with [`examples/json/grammar.rs`](https://github.com/ArneCode/marser/blob/main/examples/json/grammar.rs) (build and run the **`json`** example from [`examples/json/main.rs`](https://github.com/ArneCode/marser/blob/main/examples/json/main.rs) for CLI and `--trace-file`).
 
 Why this example is useful:
 
@@ -57,7 +56,7 @@ Why this example is useful:
 
 Suggested flow:
 
-1. Open `examples/json/grammar.rs` and look for `.trace()` placements in the grammar.
+1. Open [`examples/json/grammar.rs`](https://github.com/ArneCode/marser/blob/main/examples/json/grammar.rs) and look for `.trace()` placements in the grammar.
 2. Run:
 
 ```bash

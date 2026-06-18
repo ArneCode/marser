@@ -72,7 +72,7 @@ fn main() {
     assert_eq!(roll, Roll { count: 2, sides: 6 });
 }
 ```
-Runnable examples live under [`examples/`](examples/README.md) (see also [below](#examples-in-this-repository)).
+Runnable examples live under [`examples/`](https://github.com/ArneCode/marser/tree/main/examples) (see also [below](#examples-in-this-repository)).
 
 ## Learn more
 
@@ -87,7 +87,7 @@ Runnable examples live under [`examples/`](examples/README.md) (see also [below]
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`std`** *(default)*   | Standard-library integration: `ParserError::eprint` / `write`, trace-to-file helpers, and other I/O. Disable with `default-features = false` for embedded or other **`no_std` + `alloc`** targets.                                                                    |
 | **`annotate-snippets`** | Rich terminal diagnostics via [annotate-snippets](https://docs.rs/annotate-snippets). Works on `no_std` builds for string rendering; `eprint` / `write` still need **`std`**.                                                                                         |
-| **`parser-trace`**      | **Experimental:** record parser traces to replay them in the trace viewer TUI (requires **`std`**). See the [tracing guide](https://docs.rs/marser/latest/marser/guide/tracing_and_debugging/index.html) and [`marser-trace-viewer/`](marser-trace-viewer/README.md). |
+| **`parser-trace`**      | **Experimental:** record parser traces to replay them in the trace viewer TUI (requires **`std`**). See the [tracing guide](https://docs.rs/marser/latest/marser/guide/tracing_and_debugging/index.html) and [`marser-trace-viewer/`](https://github.com/ArneCode/marser/tree/main/marser-trace-viewer). |
 
 
 ## Requirements
@@ -100,8 +100,8 @@ Examples need the **`annotate-snippets`** feature for rendering of errors
 
 | Example                                                  | What it shows                                                                                                  |
 | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| [`examples/json/`](examples/json/)                       | A JSON parser with error recovery and custom error messages.                                                   |
-| [`examples/mini_language.rs`](examples/mini_language.rs) | Small language: statements, operator precedence, functions etc. with error recovery and custom error messages. |
+| [`examples/json/`](https://github.com/ArneCode/marser/tree/main/examples/json)                       | A JSON parser with error recovery and custom error messages.                                                   |
+| [`examples/mini_language.rs`](https://github.com/ArneCode/marser/blob/main/examples/mini_language.rs) | Small language: statements, operator precedence, functions etc. with error recovery and custom error messages. |
 
 Run JSON from a git clone:
 
@@ -122,7 +122,7 @@ Input:
 
 Example diagnostic, rendered using **`annotate-snippets`**:
 
-![Example parse error for invalid JSON Screenshot](https://raw.githubusercontent.com/ArneCode/marser/main/img/image.png)
+![Example parse error for invalid JSON Screenshot](https://raw.githubusercontent.com/ArneCode/marser/feaabd44f8d684642c820363f5387fbccdea3f03/img/image.png)
 
 This parser can also still produce a recovered output:
 
@@ -138,13 +138,13 @@ This parser can also still produce a recovered output:
 ```
 
 The json example also has tracing support, so parsing can be stepped through in the trace viewer. See screenshot below. Left side is the rust source code for the parser, right side is the file being parsed.
-<img width="1126" height="531" alt="grafik" src="https://github.com/user-attachments/assets/e0ba9ef1-ca19-4f30-937d-279b718e58da" />
+<img width="1126" height="531" alt="Trace viewer stepping through the JSON parser" src="https://raw.githubusercontent.com/ArneCode/marser/feaabd44f8d684642c820363f5387fbccdea3f03/img/Screenshot%202026-05-22%20144516.png" />
 
 ## Performance compared to other libraries:
 
 Below is a comparison of the speed of different libraries for parsing json, including marser. I used json because there are already parsers using different libraries written for it
 
-<img src="https://github.com/ArneCode/marser/raw/main/img/chart.png" width="50%">
+<img src="https://raw.githubusercontent.com/ArneCode/marser/feaabd44f8d684642c820363f5387fbccdea3f03/img/chart.png" width="50%">
 
 Code for other libraries taken from [parse-rosetta](https://github.com/rosetta-rs/parse-rosetta-rs). Read more [here](https://github.com/ArneCode/json-parser-compare).
 
@@ -156,7 +156,7 @@ The difference in speed between the marser implementation with error recovery an
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](https://github.com/ArneCode/marser/blob/main/LICENSE).
 
 ## AI assistance
 

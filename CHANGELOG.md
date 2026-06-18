@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- README image URLs are pinned to a fixed commit so screenshots stay stable on docs.rs and crates.io; repository links in the README use absolute GitHub URLs so they resolve on docs.rs as well as on GitHub and crates.io. The embedded guide, trace-crate READMEs, and example-path references use the same absolute URL patterns (docs.rs-first for Cargo features and tracing docs).
+
 ### Added
 
 - **`no_std` support** with the `alloc` crate (heap-backed `Vec`, `String`, and related types). Use `default-features = false` on the `marser` dependency for embedded or other targets without `std`.

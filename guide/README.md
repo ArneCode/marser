@@ -20,7 +20,7 @@ Skim in this order:
 2. [Quickstart](crate::guide::quickstart) — dependencies, parser vs matcher, first code.
 3. [Errors and Recovery](crate::guide::errors_and_recovery) — `Ok((_, errors))` vs `Err`, `commit_on`, recovery APIs.
 4. [Capture and Binds](crate::guide::capture_and_binds) — `capture!`, `bind!` / `bind_span!` / `bind_slice!`.
-5. [Worked JSON example](crate::guide::worked_json_example) or the repo `examples/` — full grammar layout.
+5. [Worked JSON example](crate::guide::worked_json_example) or the repo [`examples/`](https://github.com/ArneCode/marser/tree/main/examples) — full grammar layout.
 
 Then optionally: [Common patterns](crate::guide::common_patterns), [Parser and Matcher Reference](crate::guide::parser_matcher_reference), [Tracing and Debugging](crate::guide::tracing_and_debugging).
 

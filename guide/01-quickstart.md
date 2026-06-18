@@ -16,7 +16,7 @@ This section gets you from zero to a tiny working parser.
 cargo add marser
 ```
 
-Optional features are listed in the [repository README](https://github.com/ArneCode/marser#cargo-features) and on [docs.rs](https://docs.rs/marser).
+Optional features are listed under [Cargo features](https://docs.rs/marser/latest/marser/#cargo-features) on docs.rs ([repository README](https://github.com/ArneCode/marser#cargo-features)).
 
 From a clone of this repository, run an example with the feature flags that example needs (see the README *Examples* section):
 
