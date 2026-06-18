@@ -2,6 +2,8 @@
 
 `marser` is a parser-combinator library for writing **PEG-style grammars in Rust** with a focus on useful errors, error recovery and good performance.
 
+Why build yet another parser-combinator library? You can read about it [here](https://blog.arnedebo.com/posts/a-grammar-first-approach-to-parser-combinators/).
+
 It supports: 
 - **Zero-copy parsing** for faster parsers
 - **Multiple input formats** - use `&str` and `&[u8]` / `&[T]` or implement the `Input` trait yourself.
@@ -142,7 +144,7 @@ The json example also has tracing support, so parsing can be stepped through in 
 
 Below is a comparison of the speed of different libraries for parsing json, including marser. I used json because there are already parsers using different libraries written for it
 
-<img src="https://github.com/ArneCode/marser/raw/main/img/chart.png" width="400">
+<img src="https://github.com/ArneCode/marser/raw/main/img/chart.png" width="50%">
 
 Code for other libraries taken from [parse-rosetta](https://github.com/rosetta-rs/parse-rosetta-rs). Read more [here](https://github.com/ArneCode/json-parser-compare).
 
