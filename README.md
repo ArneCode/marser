@@ -138,7 +138,7 @@ This parser can also still produce a recovered output:
 ```
 
 The json example also has tracing support, so parsing can be stepped through in the trace viewer. See screenshot below. Left side is the rust source code for the parser, right side is the file being parsed.
-<img width="1126" height="531" alt="Trace viewer stepping through the JSON parser" src="https://raw.githubusercontent.com/ArneCode/marser/feaabd44f8d684642c820363f5387fbccdea3f03/img/Screenshot%202026-05-22%20144516.png" />
+<img width="1126" height="531" alt="Trace viewer stepping through the JSON parser" src="https://raw.githubusercontent.com/ArneCode/marser/main/img/trace-viewer.png" />
 
 ## Performance compared to other libraries:
 
