@@ -262,7 +262,17 @@ to commit immediately.
 of input.
 
 Use it for catch-all recovery, unknown tokens, or end-of-input checks with
-`negative_lookahead(AnyToken)`.
+[`end_of_input()`] or [`negative_lookahead(AnyToken)`](crate::matcher::negative_lookahead).
+
+### `start_of_input` and `end_of_input`
+
+[`end_of_input()`] succeeds when no tokens remain — equivalent to
+[`negative_lookahead(AnyToken)`](crate::matcher::negative_lookahead). Use it in
+grammars for explicit end-of-input checks (including with `.with_label(...)`).
+
+[`start_of_input()`] succeeds when the cursor equals [`Input::start_pos`](crate::input::Input::start_pos)
+for the current stream. For a sub-slice of a larger buffer, that is the start of
+the slice, not necessarily byte offset zero in the outer source.
 
 ### `StringMatcher`, `&str`, and `char`
 

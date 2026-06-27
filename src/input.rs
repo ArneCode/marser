@@ -154,6 +154,12 @@ impl<'src, I: Input<'src>> InputStream<'src, I> {
         self.pos = pos;
     }
 
+    /// `true` when the cursor equals [`Input::start_pos`] for this stream.
+    #[inline]
+    pub(crate) fn is_at_start(&self) -> bool {
+        self.pos.clone().into() == self.input.start_pos().into()
+    }
+
     /// Forwards to [`Input::try_consume_prefix_bytes`] on the underlying input.
     #[inline]
     pub(crate) fn try_consume_prefix_bytes(&mut self, prefix: &[u8]) -> Option<bool> {
@@ -190,6 +196,17 @@ impl<'src> InputStream<'src, &'src [u8]> {
 #[cfg(test)]
 mod tests {
     use super::{Input, InputStream};
+
+    #[test]
+    fn is_at_start_tracks_cursor_against_input_start_pos() {
+        let s = "abc";
+        let mut stream = InputStream::new(s);
+        assert!(stream.is_at_start());
+        assert_eq!(stream.next(), Some('a'));
+        assert!(!stream.is_at_start());
+        stream.set_pos(Input::start_pos(&s));
+        assert!(stream.is_at_start());
+    }
 
     #[test]
     fn str_try_consume_prefix_advances_pos() {

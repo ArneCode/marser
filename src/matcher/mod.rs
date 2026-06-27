@@ -32,6 +32,8 @@ pub mod commit_matcher;
 pub mod err_if;
 pub mod error_contextualizer;
 pub mod if_error;
+/// Zero-width matchers at the start or end of an input stream.
+pub mod input_boundary;
 /// Parser-as-matcher adapters that discard parser output.
 pub mod ignore_result;
 pub mod multiple;
@@ -55,6 +57,7 @@ pub use err_if::{
     try_insert_if_missing, unwanted,
 };
 pub use error_contextualizer::ErrorContextualizer;
+pub use input_boundary::{StartOfInput, end_of_input, start_of_input};
 pub use multiple::{Multiple, many};
 pub use negative_lookahead::{NegativeLookahead, negative_lookahead};
 pub use one_or_more::{OneOrMore, one_or_more};

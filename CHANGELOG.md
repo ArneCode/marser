@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `matcher::start_of_input()` and `matcher::end_of_input()` zero-width matchers for input-boundary checks in grammars; `end_of_input()` is equivalent to `negative_lookahead(AnyToken)`.
+
 ## [0.2.1] - 2026-06-18
 
 ### Fixed

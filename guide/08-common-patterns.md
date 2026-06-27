@@ -57,11 +57,11 @@ ignoring it:
 
 ```rust
 use marser::capture;
-use marser::matcher::{any_token::AnyToken, negative_lookahead::negative_lookahead};
+use marser::matcher::end_of_input;
 use marser::parser::{recursive, DeferredWeak, Parser};
 
 let _value = recursive(|_weak: DeferredWeak<'_, '_, &str, ()>| {
-    capture!(negative_lookahead(AnyToken) => ())
+    capture!(end_of_input() => ())
 });
 ```
 
@@ -83,7 +83,7 @@ Use the bind form that matches the boundary you want:
 
 ## Full-input parsing
 
-`Parser::parse_str` / `parse_whole_input` use the same driver as `marser::parse`: the grammar is wrapped so **no trailing tokens** remain. Use `negative_lookahead(AnyToken)` patterns inside the library’s default wrapper; for sub-parsers that only parse a fragment, use segment-specific rules instead of the whole-input entrypoint.
+`Parser::parse_str` / `parse_whole_input` use the same driver as `marser::parse`: the grammar is wrapped so **no trailing tokens** remain (via [`end_of_input()`](crate::matcher::end_of_input)). Use `end_of_input()` in grammars when you need an explicit end-of-input check; for sub-parsers that only parse a fragment, use segment-specific rules instead of the whole-input entrypoint.
 
 ## Type size and `erase_types`
 
