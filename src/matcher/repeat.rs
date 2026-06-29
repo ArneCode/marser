@@ -1,8 +1,7 @@
 //! Bounded repetition matcher (`repeat(m, bounds)`).
 
-use alloc::boxed::Box;
 use core::{
-    fmt::{Debug, Display},
+    fmt::Debug,
     ops::{Bound, RangeBounds},
 };
 
