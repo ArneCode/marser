@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-06-29
+
 ### Added
 
 - `matcher::start_of_input()` and `matcher::end_of_input()` zero-width matchers for input-boundary checks in grammars; `end_of_input()` is equivalent to `negative_lookahead(AnyToken)`.
@@ -106,6 +108,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Trace file formats and trace-related APIs may change in future releases; pin versions and read release notes when upgrading.
 - Macro expansion details are not a stability guarantee; use `capture!` and documented helpers as the public API.
 
+[0.2.2]: https://github.com/ArneCode/marser/releases/tag/0.2.2
 [0.2.1]: https://github.com/ArneCode/marser/releases/tag/0.2.1
 [0.2.0]: https://github.com/ArneCode/marser/releases/tag/0.2.0
 [0.1.4]: https://github.com/ArneCode/marser/releases/tag/0.1.4
