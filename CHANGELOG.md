@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `matcher::start_of_input()` and `matcher::end_of_input()` zero-width matchers for input-boundary checks in grammars; `end_of_input()` is equivalent to `negative_lookahead(AnyToken)`.
+- `matcher::repeat(matcher, bounds)` for bounded greedy repetition with Rust count ranges (`2..5`, `1..`, `2..=4`, `3..=3`, etc.); related to `many` (`0..`), `one_or_more` (`1..`), and `optional` (`0..=1`).
+
 ## [0.2.1] - 2026-06-18
 
 ### Fixed

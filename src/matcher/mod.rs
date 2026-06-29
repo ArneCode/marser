@@ -4,7 +4,7 @@
 //! # For users
 //!
 //! - Matchers describe **structure**: sequences (`(a, b)`), [`crate::one_of::one_of`], repetition
-//!   ([`multiple::many`], [`one_or_more()`], [`optional()`]), lookahead ([`positive_lookahead()`],
+//!   ([`repeat()`], [`multiple::many`], [`one_or_more()`], [`optional()`]), lookahead ([`positive_lookahead()`],
 //!   [`negative_lookahead()`]), and [`commit_on()`] for committed sub-rules.
 //! - They are composed with parsers through [`crate::capture`]; see [`crate::guide::capture_and_binds`].
 //! - Extend matchers with [`MatcherCombinator`] (`with_label`, `try_insert_if_missing`, `unwanted`, …).
@@ -32,6 +32,8 @@ pub mod commit_matcher;
 pub mod err_if;
 pub mod error_contextualizer;
 pub mod if_error;
+/// Zero-width matchers at the start or end of an input stream.
+pub mod input_boundary;
 /// Parser-as-matcher adapters that discard parser output.
 pub mod ignore_result;
 pub mod multiple;
@@ -42,6 +44,7 @@ pub mod one_or_more;
 pub mod optional;
 pub mod parser_matcher;
 pub mod positive_lookahead;
+pub mod repeat;
 pub(crate) mod runner;
 pub mod sequence;
 pub mod string;
@@ -55,12 +58,14 @@ pub use err_if::{
     try_insert_if_missing, unwanted,
 };
 pub use error_contextualizer::ErrorContextualizer;
+pub use input_boundary::{StartOfInput, end_of_input, start_of_input};
 pub use multiple::{Multiple, many};
 pub use negative_lookahead::{NegativeLookahead, negative_lookahead};
 pub use one_or_more::{OneOrMore, one_or_more};
 pub use optional::{Optional, optional};
 pub use parser_matcher::ParserMatcher;
 pub use positive_lookahead::{PositiveLookahead, positive_lookahead};
+pub use repeat::{Repeat, repeat};
 pub(crate) use runner::{DirectMatchRunner, MatchRunner, NoMemoizeBacktrackingRunner};
 pub use string::StringMatcher;
 pub use to_parser::ToParser;

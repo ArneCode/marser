@@ -262,7 +262,17 @@ to commit immediately.
 of input.
 
 Use it for catch-all recovery, unknown tokens, or end-of-input checks with
-`negative_lookahead(AnyToken)`.
+[`end_of_input()`] or [`negative_lookahead(AnyToken)`](crate::matcher::negative_lookahead).
+
+### `start_of_input` and `end_of_input`
+
+[`end_of_input()`] succeeds when no tokens remain — equivalent to
+[`negative_lookahead(AnyToken)`](crate::matcher::negative_lookahead). Use it in
+grammars for explicit end-of-input checks (including with `.with_label(...)`).
+
+[`start_of_input()`] succeeds when the cursor equals [`Input::start_pos`](crate::input::Input::start_pos)
+for the current stream. For a sub-slice of a larger buffer, that is the start of
+the slice, not necessarily byte offset zero in the outer source.
 
 ### `StringMatcher`, `&str`, and `char`
 
@@ -284,6 +294,31 @@ let _digit_run = one_or_more('0'..='9');
 ```
 
 Use ranges for character or token classes.
+
+### `repeat`
+
+`repeat(matcher, bounds)` is greedy bounded repetition. The second argument is a
+**repetition count** [`RangeBounds<usize>`](https://doc.rust-lang.org/std/ops/trait.RangeBounds.html),
+not a token class range.
+
+```rust
+use marser::matcher::repeat::repeat;
+
+let _two_to_four = repeat('0'..='9', 2..5);   // 2, 3, or 4 digits (half-open count)
+let _at_least_two = repeat('a', 2..);
+let _exactly_three = repeat('b', 3..=3);
+```
+
+Count ranges use the same half-open rules as Rust: `2..5` means 2, 3, or 4
+repetitions. Use `*name` binds inside `repeat(...)` when capturing each
+occurrence.
+
+Equivalences for unbounded forms:
+
+- `many(m)` ≈ `repeat(m, 0..)`
+- `one_or_more(m)` ≈ `repeat(m, 1..)`
+- `optional(m)` ≈ `repeat(m, 0..=1)` (same attempt count; `optional` always
+  reports match success when the inner matcher fails once)
 
 ### `many`
 

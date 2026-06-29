@@ -65,7 +65,7 @@ use crate::{
     error::{FurthestFailError, MatcherRunError, ParserError, error_handler::EmptyErrorHandler},
     input::{Input, InputStream},
     matcher::{
-        any_token::AnyToken, commit_matcher::commit_on, negative_lookahead::negative_lookahead,
+        commit_matcher::commit_on, end_of_input,
     },
     mode::Emit,
     parser::{Parser, internal::ParserImpl},
@@ -112,7 +112,7 @@ where
     let eof_wrapped = capture!(
         commit_on((), (
             bind!(parser.clone(), result),
-            negative_lookahead(AnyToken),
+            end_of_input(),
         )) => result
     );
 
@@ -174,7 +174,7 @@ where
     let eof_wrapped = capture!(
         commit_on((), (
             bind!(parser.clone(), result),
-            negative_lookahead(AnyToken),
+            end_of_input(),
         )) => result
     );
 
