@@ -3,7 +3,7 @@
 use crate::{
     error::{MatcherRunError, error_handler::ErrorHandler},
     input::{Input, InputStream},
-    matcher::{MatchRunner, Matcher},
+    matcher::{MatchRunner, Matcher, repeat::run_repeat_loop},
 };
 
 /// Requires at least one successful `matcher`, then behaves like greedy repetition.
@@ -47,20 +47,13 @@ where
         Runner: MatchRunner<'a, 'src, Inp, MRes = MRes>,
         'src: 'a,
     {
-        // First match is mandatory — propagate the error if absent.
-        if !runner.run_match::<_, M, _>(&self.matcher, error_handler, input)? {
-            return Ok(false);
-        }
-        // Remaining matches are optional (same as Multiple).
-        loop {
-            let before = input.get_pos();
-            if !runner.run_match::<_, M, _>(&self.matcher, error_handler, input)? {
-                break;
-            }
-            if input.get_pos().into() == before.into() {
-                break;
-            }
-        }
-        Ok(true)
+        run_repeat_loop::<Inp, MRes, Runner, M, Match, _>(
+            &self.matcher,
+            1,
+            None,
+            runner,
+            error_handler,
+            input,
+        )
     }
 }

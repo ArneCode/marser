@@ -4,7 +4,7 @@
 //! # For users
 //!
 //! - Matchers describe **structure**: sequences (`(a, b)`), [`crate::one_of::one_of`], repetition
-//!   ([`multiple::many`], [`one_or_more()`], [`optional()`]), lookahead ([`positive_lookahead()`],
+//!   ([`repeat()`], [`multiple::many`], [`one_or_more()`], [`optional()`]), lookahead ([`positive_lookahead()`],
 //!   [`negative_lookahead()`]), and [`commit_on()`] for committed sub-rules.
 //! - They are composed with parsers through [`crate::capture`]; see [`crate::guide::capture_and_binds`].
 //! - Extend matchers with [`MatcherCombinator`] (`with_label`, `try_insert_if_missing`, `unwanted`, …).
@@ -44,6 +44,7 @@ pub mod one_or_more;
 pub mod optional;
 pub mod parser_matcher;
 pub mod positive_lookahead;
+pub mod repeat;
 pub(crate) mod runner;
 pub mod sequence;
 pub mod string;
@@ -64,6 +65,7 @@ pub use one_or_more::{OneOrMore, one_or_more};
 pub use optional::{Optional, optional};
 pub use parser_matcher::ParserMatcher;
 pub use positive_lookahead::{PositiveLookahead, positive_lookahead};
+pub use repeat::{Repeat, repeat};
 pub(crate) use runner::{DirectMatchRunner, MatchRunner, NoMemoizeBacktrackingRunner};
 pub use string::StringMatcher;
 pub use to_parser::ToParser;

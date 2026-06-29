@@ -3,7 +3,7 @@
 use crate::{
     error::{MatcherRunError, error_handler::ErrorHandler},
     input::{Input, InputStream},
-    matcher::{MatchRunner, Matcher},
+    matcher::{MatchRunner, Matcher, repeat::run_repeat_loop},
 };
 
 /// `matcher?` at the matcher level.
@@ -46,9 +46,13 @@ where
         Runner: MatchRunner<'a, 'src, Inp, MRes = MRes>,
         'src: 'a,
     {
-        if runner.run_match::<_, M, _>(&self.matcher, error_handler, input)? {
-            return Ok(true);
-        }
-        Ok(true)
+        run_repeat_loop::<Inp, MRes, Runner, M, Match, _>(
+            &self.matcher,
+            0,
+            Some(1),
+            runner,
+            error_handler,
+            input,
+        )
     }
 }

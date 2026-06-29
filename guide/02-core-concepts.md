@@ -56,6 +56,7 @@ Use lookahead to avoid ambiguous parses and to improve diagnostics.
 - `many(x)` for zero or more
 - `one_or_more(x)` for one or more
 - `optional(x)` for optional segments
+- `repeat(x, bounds)` for a bounded number of repetitions (e.g. `repeat(x, 2..5)` for 2–4 times, half-open on the count)
 
 These are core building blocks for lists, whitespace, and token groups.
 
