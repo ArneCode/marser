@@ -77,6 +77,7 @@ Runnable examples live under [`examples/`](https://github.com/ArneCode/marser/tr
 ## Learn more
 
 - [Guide](https://docs.rs/marser/latest/marser/guide/index.html) on docs.rs
+- [grammar-to-marser](https://grammar-to-marser.arnedebo.com/) - Input a PEG/PEST grammar and get out a working marser parser
 - [API documentation](https://docs.rs/marser)
 - [crates.io](https://crates.io/crates/marser)
 - [Design rationale: A Grammar-First Approach to Parser Combinators in Rust](https://blog.arnedebo.com/posts/a-grammar-first-approach-to-parser-combinators/)
